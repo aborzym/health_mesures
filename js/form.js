@@ -1,6 +1,16 @@
 //========================
-// WYBÓR DZISIEJSZEJ DATY
+// Dostęp do FIRESTORE
 //========================
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc,
+} from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+import { app } from "./firebase.js";
+import { auth } from "./firebase-auth.js";
+
+const db = getFirestore(app); //getFirestore(app) — łączy projekt z Firestore.
 
 const measurementDate = document.getElementById("measurement-date");
 const today = new Date();
@@ -21,7 +31,7 @@ const pressureEvening = document.getElementById("pressure_second");
 const weight = document.getElementById("weight");
 const saveBtn = document.querySelector(".save-btn");
 
-saveBtn.addEventListener("click", (e) => {
+saveBtn.addEventListener("click", async (e) => {
   e.preventDefault();
 
   const measurement = {
@@ -88,9 +98,34 @@ saveBtn.addEventListener("click", (e) => {
       }
     }
   }
+  //TU BYŁ ZAPIS DO LOCAL STORAGE
+  // // Wszystkie pola poprawne → zapis i reset
+  // localStorage.setItem(measurement.date, JSON.stringify(measurement));
 
-  // Wszystkie pola poprawne → zapis i reset
-  localStorage.setItem(measurement.date, JSON.stringify(measurement));
+  // tworzymy dokument dla danego użytkownika i daty pomiaru
+  // zakładam, że mamy auth.currentUser.uid do identyfikacji użytkownika
+
+  //pobiera unikalne ID zalogowanego użytkownika.
+  const userId = auth.currentUser.uid;
+
+  //tworzy ścieżkę dokumentu w Firestore:
+  // kolekcja users → dokument z ID użytkownika → podkolekcja measurements → dokument z datą pomiaru.
+  const docRef = doc(db, "users", userId, "measurements", measurement.date);
+
+  //sprawdzamy czy dokument już istnieje
+  const docSnap = await getDoc(docRef);
+  // docSnap.exists() — zwraca true, jeśli dokument istnieje.
+  // docSnap.data() — daje dostęp do zapisanych wcześniej danych.
+
+  if (docSnap.exists()) {
+    const confirmOverwrite = confirm(
+      `Pomiar z dnia ${measurement.date} już istnieje. Nadpisać?`
+    );
+    if (!confirmOverwrite) return; //przerywamy zapis
+  }
+  // zapisuje cały obiekt measurement w tym dokumencie. Jeśli dokument już istnieje, nadpisze go
+  // await — czekamy aż zapis się zakończy, żeby nie robić nic przed jego zakończeniem.
+  await setDoc(docRef, measurement);
   resetForm();
 });
 
@@ -123,4 +158,24 @@ function validateField(value, type) {
   }
 
   return pattern.test(value);
+}
+
+//========================
+// FUNKCJA POBRANIA DANYCH Z FIRESTORE
+//========================
+
+// Funkcja przyjmuje date (np. "2025-09-30") jako parametr.
+// Tworzy ścieżkę dokumentu w Firestore: użytkownik → pomiary → data.
+// Jeśli dokument istnieje → zwraca dane, jeśli nie → zwraca null.
+
+async function getMeasurements(date) {
+  const userId = auth.currentUser.uid;
+  const docRef = doc(db, "users", userId, "measurements", date);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    return docSnap(data()); // zwraca zapisany obiekt measurement
+  } else {
+    return null; //brak danych dla tej daty
+  }
 }

@@ -1,5 +1,5 @@
 const loginPage = document.getElementById("login-page");
-const measurementsPage = document.getElementById("measurements-page");
+const measurementsPage = document.getElementById("measurement-page");
 const loginForm = document.getElementById("login-form");
 
 loginForm.addEventListener("submit", (e) => {
