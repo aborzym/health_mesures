@@ -1,0 +1,205 @@
+@use "variables" as v;
+
+// ====================
+// Formularz główny
+// ====================
+#mesurements-form {
+  padding: v.$spacing-lg;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: v.$color-bg-light;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+// ====================
+// Wybór daty
+// ====================
+.date-container {
+  position: relative;
+  width: 100%;
+  margin-bottom: v.$spacing-md;
+
+  label {
+    display: block;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: v.$spacing-xs;
+  }
+
+  input[type="date"] {
+    width: 40%;
+    min-width: 150px;
+    text-align: center;
+    padding: v.$spacing-sm;
+    border: 1px solid v.$color-border;
+    border-radius: 6px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+
+    &:hover {
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: v.$green;
+      box-shadow: 0 0 5px rgba(94, 183, 43, 0.5);
+      background-color: lighten(v.$green, 40%);
+    }
+  }
+}
+// ====================
+// Fieldset
+// ====================
+.form-group {
+  border: 1px solid v.$color-border;
+  border-radius: 8px;
+  padding: v.$spacing-md;
+  margin-bottom: v.$spacing-xl;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+}
+
+// Legend
+.form-group-legend {
+  margin-bottom: v.$spacing-xs;
+  padding: v.$spacing-sm;
+  font-size: v.$font-size-heading;
+  font-weight: 500;
+  letter-spacing: 0.1rem;
+  text-align: left;
+}
+
+// Label
+label {
+  display: block;
+  font-weight: 500;
+  text-align: left;
+}
+
+// ====================
+// Inputy
+// ====================
+input[type="text"] {
+  padding: v.$spacing-sm;
+  border-radius: 6px;
+  width: 100%;
+  margin-bottom: v.$spacing-xs;
+  transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+
+  &:hover {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+// Glukoza
+#glucose_first {
+  border: 1px solid v.$color-glucose-1;
+  background-color: lighten(v.$color-glucose-1, 40%);
+
+  &:focus {
+    border-color: v.$color-glucose-2;
+    box-shadow: 0 0 5px rgba(193, 18, 31, 0.5);
+    background-color: lighten(v.$color-glucose-1, 20%);
+  }
+}
+
+#glucose_second {
+  border: 1px solid v.$color-glucose-2;
+  background-color: lighten(v.$color-glucose-2, 40%);
+
+  &:focus {
+    border-color: v.$color-glucose-1;
+    box-shadow: 0 0 5px rgba(249, 65, 68, 0.5);
+    background-color: lighten(v.$color-glucose-2, 20%);
+  }
+}
+
+// Ciśnienie
+#pressure_first {
+  border: 1px solid v.$color-pressure-morning;
+  background-color: lighten(v.$color-pressure-morning, 40%);
+
+  &:focus {
+    border-color: v.$color-pressure-evening;
+    box-shadow: 0 0 5px rgba(29, 53, 87, 0.5);
+    background-color: lighten(v.$color-pressure-morning, 20%);
+  }
+}
+
+#pressure_second {
+  border: 1px solid v.$color-pressure-evening;
+  background-color: lighten(v.$color-pressure-evening, 40%);
+
+  &:focus {
+    border-color: v.$color-pressure-morning;
+    box-shadow: 0 0 5px rgba(69, 123, 157, 0.5);
+    background-color: lighten(v.$color-pressure-evening, 20%);
+  }
+}
+
+// Waga
+#weight {
+  border: 1px solid v.$color-weight;
+  background-color: lighten(v.$color-weight, 40%);
+
+  &:focus {
+    border-color: v.$green;
+    box-shadow: 0 0 5px rgba(94, 183, 43, 0.5);
+    background-color: lighten(v.$color-weight, 20%);
+  }
+}
+
+// ====================
+// Przycisk zapisu
+// ====================
+.save-btn {
+  padding: v.$spacing-sm;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background-color: v.$green-light;
+  font-weight: 600;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  margin-top: v.$spacing-md;
+
+  &:hover {
+    background-color: v.$green;
+    box-shadow: 0 0 7px rgba(0, 0, 0, 0.5);
+  }
+}
+
+.input-wrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: v.$spacing-md;
+  .icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.1rem;
+    pointer-events: none;
+  }
+  input[type="text"] {
+    width: 100%;
+    padding-right: 70px; // zostaw miejsce na jednostkę po prawej
+    text-align: right;
+  }
+
+  .unit {
+    position: absolute;
+    right: 10px;
+    top: 40%;
+    transform: translateY(-50%);
+    font-size: 0.9rem;
+    color: v.$color-text;
+    pointer-events: none; // nie przeszkadza w klikaniu inputa
+  }
+}

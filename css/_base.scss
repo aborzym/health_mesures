@@ -1,0 +1,25 @@
+@use "variables" as v;
+
+// body, typografia
+body {
+  background-color: v.$color-bg;
+  color: v.$color-text;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 20px;
+  min-height: 100vh;
+  font-family: v.$font-base;
+  font-size: v.$font-size-base;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+legend {
+  font-size: v.$font-size-heading;
+  font-weight: 500;
+  letter-spacing: 0.1rem;
+}

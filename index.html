@@ -4,9 +4,92 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pomiary parametrów zdrowotnych</title>
-    <script src="./script.js" defer></script>
-    <link rel="stylesheet" href="./reset.css" />
-    <link rel="stylesheet" href="./styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./css/reset.css" />
+    <link rel="stylesheet" href="./css/main.css" />
   </head>
-  <body></body>
+  <body>
+    <form id="measurements-form">
+      <!-- Wybór daty -->
+      <div class="date-container">
+        <label for="measurement-date">Data pomiarów</label>
+        <input type="date" id="mesurement-date" />
+      </div>
+      <!-- Glukoza -->
+      <fieldset class="form-group">
+        <legend class="form-group-legend">Pomiary zawartości glukozy</legend>
+
+        <div class="input-wrapper">
+          <span class="icon">🩸</span>
+          <input type="text" id="glucose_first" />
+          <span class="unit">mg/dL</span>
+        </div>
+
+        <div class="input-wrapper">
+          <span class="icon">🩸</span>
+          <input type="text" id="glucose_second" />
+          <span class="unit">mg/dL</span>
+        </div>
+      </fieldset>
+
+      <!-- Ciśnienie -->
+      <fieldset class="form-group">
+        <legend class="form-group-legend">Pomiary ciśnienia</legend>
+
+        <div class="input-wrapper">
+          <span class="icon">💓</span>
+          <input type="text" id="pressure_first" />
+          <span class="unit">mmHg</span>
+        </div>
+
+        <div class="input-wrapper">
+          <span class="icon">💓</span>
+          <input type="text" id="pressure_second" />
+          <span class="unit">mmHg</span>
+        </div>
+      </fieldset>
+
+      <!-- Waga -->
+      <fieldset class="form-group">
+        <legend class="form-group-legend">Pomiar wagi</legend>
+
+        <div class="input-wrapper">
+          <span class="icon">⚖️</span>
+          <input type="text" id="weight" />
+          <span class="unit">kg</span>
+        </div>
+      </fieldset>
+
+      <button class="save-btn">Zapisz dane</button>
+    </form>
+    <script type="module" src="./js/main.js"></script>
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+      import {
+        getAuth,
+        createUserWithEmailAndPassword,
+        signInWithEmailAndPassword,
+        signOut,
+      } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyB7LezTsWvWKuCSl9imt0UEqx905ExloHE",
+        authDomain: "pomiary-zdrowotne.firebaseapp.com",
+        projectId: "pomiary-zdrowotne",
+        storageBucket: "pomiary-zdrowotne.firebasestorage.app",
+        messagingSenderId: "344261190503",
+        appId: "1:344261190503:web:fd07ef75175828d1c785c2",
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+    </script>
+  </body>
 </html>
