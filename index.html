@@ -13,83 +13,84 @@
     <link rel="stylesheet" href="./css/main.css" />
   </head>
   <body>
-    <form id="measurements-form">
-      <!-- Wybór daty -->
-      <div class="date-container">
-        <label for="measurement-date">Data pomiarów</label>
-        <input type="date" id="mesurement-date" />
+    <header class="main-header">
+      <div class="logo">🩺 <span>Moje Pomiary</span></div>
+      <nav class="nav-links">
+        <a href="index.html">Pomiary</a>
+        <a href="charts.html">Wykresy</a>
+        <a href="history.html">Historia pomiarów</a>
+      </nav>
+      <div class="auth-buttons">
+        <button class="btn logout-btn" style="display: none">Wyloguj</button>
       </div>
-      <!-- Glukoza -->
-      <fieldset class="form-group">
-        <legend class="form-group-legend">Pomiary zawartości glukozy</legend>
+    </header>
+    <main>
+      <!-- Logowanie -->
+      <div id="login-page">
+        <h1>Logowanie do Moich Pomiarów</h1>
+        <form id="login-form">
+          <label for="login-email">Email:</label>
+          <input type="email" id="login-email" required />
 
-        <div class="input-wrapper">
-          <span class="icon">🩸</span>
-          <input type="text" id="glucose_first" />
-          <span class="unit">mg/dL</span>
-        </div>
+          <label for="login-password">Hasło:</label>
+          <input type="password" id="login-password" required />
 
-        <div class="input-wrapper">
-          <span class="icon">🩸</span>
-          <input type="text" id="glucose_second" />
-          <span class="unit">mg/dL</span>
-        </div>
-      </fieldset>
+          <button type="submit" class="btn login-btn">Zaloguj</button>
+        </form>
+      </div>
 
-      <!-- Ciśnienie -->
-      <fieldset class="form-group">
-        <legend class="form-group-legend">Pomiary ciśnienia</legend>
-
-        <div class="input-wrapper">
-          <span class="icon">💓</span>
-          <input type="text" id="pressure_first" />
-          <span class="unit">mmHg</span>
-        </div>
-
-        <div class="input-wrapper">
-          <span class="icon">💓</span>
-          <input type="text" id="pressure_second" />
-          <span class="unit">mmHg</span>
-        </div>
-      </fieldset>
-
-      <!-- Waga -->
-      <fieldset class="form-group">
-        <legend class="form-group-legend">Pomiar wagi</legend>
-
-        <div class="input-wrapper">
-          <span class="icon">⚖️</span>
-          <input type="text" id="weight" />
-          <span class="unit">kg</span>
-        </div>
-      </fieldset>
-
-      <button class="save-btn">Zapisz dane</button>
-    </form>
+      <!-- Formularz pomiarów -->
+      <div id="measurement-page" class="hidden">
+        <h1>Wpisz swoje pomiary</h1>
+        <form id="measurements-form">
+          <!-- Wybór daty -->
+          <div class="date-container">
+            <label for="measurement-date">Data pomiarów</label>
+            <input type="date" id="measurement-date" />
+          </div>
+          <!-- Glukoza -->
+          <fieldset class="form-group">
+            <legend class="form-group-legend">
+              Pomiary zawartości glukozy
+            </legend>
+            <div class="input-wrapper">
+              <span class="icon">🩸</span>
+              <input type="number" id="glucose_first" />
+              <span class="unit">mg/dL</span>
+            </div>
+            <div class="input-wrapper">
+              <span class="icon">🩸</span>
+              <input type="number" id="glucose_second" />
+              <span class="unit">mg/dL</span>
+            </div>
+          </fieldset>
+          <!-- Ciśnienie -->
+          <fieldset class="form-group">
+            <legend class="form-group-legend">Pomiary ciśnienia</legend>
+            <div class="input-wrapper">
+              <span class="icon">💓</span>
+              <input type="text" id="pressure_first" />
+              <span class="unit">mmHg</span>
+            </div>
+            <div class="input-wrapper">
+              <span class="icon">💓</span>
+              <input type="text" id="pressure_second" />
+              <span class="unit">mmHg</span>
+            </div>
+          </fieldset>
+          <!-- Waga -->
+          <fieldset class="form-group">
+            <legend class="form-group-legend">Pomiar wagi</legend>
+            <div class="input-wrapper">
+              <span class="icon">⚖️</span>
+              <input type="number" id="weight" />
+              <span class="unit">kg</span>
+            </div>
+          </fieldset>
+          <button class="save-btn">Zapisz dane</button>
+        </form>
+      </div>
+    </main>
     <script type="module" src="./js/main.js"></script>
-    <script type="module">
-      // Import the functions you need from the SDKs you need
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
-      // TODO: Add SDKs for Firebase products that you want to use
-      // https://firebase.google.com/docs/web/setup#available-libraries
-      import {
-        getAuth,
-        createUserWithEmailAndPassword,
-        signInWithEmailAndPassword,
-        signOut,
-      } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
-      // Your web app's Firebase configuration
-      const firebaseConfig = {
-        apiKey: "AIzaSyB7LezTsWvWKuCSl9imt0UEqx905ExloHE",
-        authDomain: "pomiary-zdrowotne.firebaseapp.com",
-        projectId: "pomiary-zdrowotne",
-        storageBucket: "pomiary-zdrowotne.firebasestorage.app",
-        messagingSenderId: "344261190503",
-        appId: "1:344261190503:web:fd07ef75175828d1c785c2",
-      };
-
-      // Initialize Firebase
-      const app = initializeApp(firebaseConfig);
-    </script>
   </body>
 </html>

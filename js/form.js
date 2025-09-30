@@ -2,7 +2,7 @@
 // WYBÓR DZISIEJSZEJ DATY
 //========================
 
-const measurementDate = document.getElementById("mesurement-date");
+const measurementDate = document.getElementById("measurement-date");
 const today = new Date();
 const year = today.getFullYear();
 const month = String(today.getMonth() + 1).padStart(2, "0");
