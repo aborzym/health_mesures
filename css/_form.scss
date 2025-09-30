@@ -1,4 +1,5 @@
 @use "variables" as v;
+@use "sass:color";
 
 // ====================
 // Formularz główny
@@ -46,7 +47,7 @@
       outline: none;
       border-color: v.$green;
       box-shadow: 0 0 5px rgba(94, 183, 43, 0.5);
-      background-color: lighten(v.$green, 40%);
+      background-color: color.scale(v.$green, $lightness: 40%);
     }
   }
 }
@@ -81,7 +82,8 @@ label {
 // ====================
 // Inputy
 // ====================
-input[type="text"] {
+input[type="text"],
+input[type="number"] {
   padding: v.$spacing-sm;
   border-radius: 6px;
   width: 100%;
@@ -100,58 +102,58 @@ input[type="text"] {
 // Glukoza
 #glucose_first {
   border: 1px solid v.$color-glucose-1;
-  background-color: lighten(v.$color-glucose-1, 40%);
+  background-color: color.scale(v.$color-glucose-1, $lightness: 40%);
 
   &:focus {
     border-color: v.$color-glucose-2;
     box-shadow: 0 0 5px rgba(193, 18, 31, 0.5);
-    background-color: lighten(v.$color-glucose-1, 20%);
+    background-color: color.scale(v.$color-glucose-1, $lightness: 20%);
   }
 }
 
 #glucose_second {
   border: 1px solid v.$color-glucose-2;
-  background-color: lighten(v.$color-glucose-2, 40%);
+  background-color: color.scale(v.$color-glucose-2, $lightness: 40%);
 
   &:focus {
     border-color: v.$color-glucose-1;
     box-shadow: 0 0 5px rgba(249, 65, 68, 0.5);
-    background-color: lighten(v.$color-glucose-2, 20%);
+    background-color: color.scale(v.$color-glucose-2, $lightness: 20%);
   }
 }
 
 // Ciśnienie
 #pressure_first {
   border: 1px solid v.$color-pressure-morning;
-  background-color: lighten(v.$color-pressure-morning, 40%);
+  background-color: color.scale(v.$color-pressure-morning, $lightness: 40%);
 
   &:focus {
     border-color: v.$color-pressure-evening;
     box-shadow: 0 0 5px rgba(29, 53, 87, 0.5);
-    background-color: lighten(v.$color-pressure-morning, 20%);
+    background-color: color.scale(v.$color-pressure-morning, $lightness: 20%);
   }
 }
 
 #pressure_second {
   border: 1px solid v.$color-pressure-evening;
-  background-color: lighten(v.$color-pressure-evening, 40%);
+  background-color: color.scale(v.$color-pressure-evening, $lightness: 40%);
 
   &:focus {
     border-color: v.$color-pressure-morning;
     box-shadow: 0 0 5px rgba(69, 123, 157, 0.5);
-    background-color: lighten(v.$color-pressure-evening, 20%);
+    background-color: color.scale(v.$color-pressure-evening, $lightness: 20%);
   }
 }
 
 // Waga
 #weight {
   border: 1px solid v.$color-weight;
-  background-color: lighten(v.$color-weight, 40%);
+  background-color: color.scale(v.$color-weight, $lightness: 40%);
 
   &:focus {
     border-color: v.$green;
     box-shadow: 0 0 5px rgba(94, 183, 43, 0.5);
-    background-color: lighten(v.$color-weight, 20%);
+    background-color: color.scale(v.$color-weight, $lightness: 20%);
   }
 }
 

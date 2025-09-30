@@ -137,17 +137,21 @@ main {
 .main-header .nav-links a:hover {
   color: #b7bcba;
 }
-.main-header .auth-buttons .btn {
+.main-header .auth-buttons {
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.main-header .auth-buttons .btn.logout-btn {
+  display: inline-block;
   padding: 8px 15px;
+  background-color: #e74c3c;
+  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
-  margin-left: 10px;
-}
-.main-header .auth-buttons .btn.logout-btn {
-  background-color: #e74c3c;
-  color: white;
 }
 .main-header .auth-buttons .btn.logout-btn:hover {
   background-color: #c0392b;
@@ -245,7 +249,7 @@ main {
   outline: none;
   border-color: rgb(81, 155, 38);
   box-shadow: 0 0 5px rgba(94, 183, 43, 0.5);
-  background-color: rgb(189.4248704663, 232.7512953368, 164.2487046632);
+  background-color: rgb(144.6248704663, 217.5512953368, 102.2487046632);
 }
 
 .form-group {
@@ -271,68 +275,71 @@ label {
   text-align: left;
 }
 
-input[type=text] {
+input[type=text],
+input[type=number] {
   padding: 8px;
   border-radius: 6px;
   width: 100%;
   margin-bottom: 4px;
   transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
 }
-input[type=text]:hover {
+input[type=text]:hover,
+input[type=number]:hover {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
 }
-input[type=text]:focus {
+input[type=text]:focus,
+input[type=number]:focus {
   outline: none;
 }
 
 #glucose_first {
   border: 1px solid #f94144;
-  background-color: white;
+  background-color: rgb(251.4, 141, 142.8);
 }
 #glucose_first:focus {
   border-color: #c1121f;
   box-shadow: 0 0 5px rgba(193, 18, 31, 0.5);
-  background-color: rgb(252.1224489796, 163.8775510204, 165.3163265306);
+  background-color: rgb(250.2, 103, 105.4);
 }
 
 #glucose_second {
   border: 1px solid #c1121f;
-  background-color: rgb(246.8957345972, 168.1042654028, 173.9573459716);
+  background-color: rgb(239.6957345972, 90.9042654028, 101.9573459716);
 }
 #glucose_second:focus {
   border-color: #f94144;
   box-shadow: 0 0 5px rgba(249, 65, 68, 0.5);
-  background-color: rgb(238.1943127962, 74.8056872038, 86.9431279621);
+  background-color: rgb(234.5943127962, 36.2056872038, 50.9431279621);
 }
 
 #pressure_first {
   border: 1px solid #457b9d;
-  background-color: rgb(199.4247787611, 218.5398230088, 230.5752212389);
+  background-color: rgb(136.6247787611, 177.3398230088, 202.9752212389);
 }
 #pressure_first:focus {
   border-color: #1d3557;
   box-shadow: 0 0 5px rgba(29, 53, 87, 0.5);
-  background-color: rgb(128.5663716814, 172.0530973451, 199.4336283186);
+  background-color: rgb(97.1663716814, 151.4530973451, 185.6336283186);
 }
 
 #pressure_second {
   border: 1px solid #1d3557;
-  background-color: rgb(112.5, 151.8103448276, 207.5);
+  background-color: rgb(77.7, 126.6103448276, 195.9);
 }
 #pressure_second:focus {
   border-color: #457b9d;
   box-shadow: 0 0 5px rgba(69, 123, 157, 0.5);
-  background-color: rgb(54.5, 99.6034482759, 163.5);
+  background-color: rgb(48.7, 89.0034482759, 146.1);
 }
 
 #weight {
   border: 1px solid #2a9d8f;
-  background-color: rgb(170.5829145729, 232.4170854271, 224.8894472362);
+  background-color: rgb(107.7829145729, 215.6170854271, 202.4894472362);
 }
 #weight:focus {
   border-color: rgb(81, 155, 38);
   box-shadow: 0 0 5px rgba(94, 183, 43, 0.5);
-  background-color: rgb(90.1105527638, 210.8894472362, 196.1859296482);
+  background-color: rgb(58.7105527638, 202.4894472362, 184.9859296482);
 }
 
 .save-btn {
