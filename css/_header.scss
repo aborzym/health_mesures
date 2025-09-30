@@ -38,21 +38,23 @@
   }
 
   .auth-buttons {
-    .btn {
+    position: absolute;
+    right: 30px; // dopasowane do paddingu headera
+    top: 50%;
+    transform: translateY(-50%);
+
+    .btn.logout-btn {
+      display: inline-block; // będzie widoczny gdy JS zmieni display
       padding: 8px 15px;
+      background-color: #e74c3c;
+      color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
       font-weight: bold;
-      margin-left: 10px;
 
-      &.logout-btn {
-        background-color: #e74c3c;
-        color: white;
-
-        &:hover {
-          background-color: #c0392b;
-        }
+      &:hover {
+        background-color: #c0392b;
       }
     }
   }
