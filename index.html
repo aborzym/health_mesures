@@ -8,22 +8,11 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
-
     <link rel="stylesheet" href="./css/reset.css" />
     <link rel="stylesheet" href="./css/main.css" />
   </head>
   <body>
-    <header class="main-header">
-      <div class="logo">🩺 <span>Moje Pomiary</span></div>
-      <nav class="nav-links">
-        <a href="index.html">Pomiary</a>
-        <a href="charts.html">Wykresy</a>
-        <a href="history.html">Historia pomiarów</a>
-      </nav>
-      <div class="auth-buttons">
-        <button class="btn logout-btn" style="display: none">Wyloguj</button>
-      </div>
-    </header>
+    <header id="header" class="main-header"></header>
     <main>
       <!-- Logowanie -->
       <div id="login-page">
@@ -38,59 +27,41 @@
           <button type="submit" class="btn login-btn">Zaloguj</button>
         </form>
       </div>
-
-      <!-- Formularz pomiarów -->
-      <div id="measurement-page" class="hidden">
-        <h1>Wpisz swoje pomiary</h1>
-        <form id="measurements-form">
-          <!-- Wybór daty -->
-          <div class="date-container">
-            <label for="measurement-date">Data pomiarów</label>
-            <input type="date" id="measurement-date" />
-          </div>
-          <!-- Glukoza -->
-          <fieldset class="form-group">
-            <legend class="form-group-legend">
-              Pomiary zawartości glukozy
-            </legend>
-            <div class="input-wrapper">
-              <span class="icon">🩸</span>
-              <input type="number" id="glucose_first" />
-              <span class="unit">mg/dL</span>
-            </div>
-            <div class="input-wrapper">
-              <span class="icon">🩸</span>
-              <input type="number" id="glucose_second" />
-              <span class="unit">mg/dL</span>
-            </div>
-          </fieldset>
-          <!-- Ciśnienie -->
-          <fieldset class="form-group">
-            <legend class="form-group-legend">Pomiary ciśnienia</legend>
-            <div class="input-wrapper">
-              <span class="icon">💓</span>
-              <input type="text" id="pressure_first" />
-              <span class="unit">mmHg</span>
-            </div>
-            <div class="input-wrapper">
-              <span class="icon">💓</span>
-              <input type="text" id="pressure_second" />
-              <span class="unit">mmHg</span>
-            </div>
-          </fieldset>
-          <!-- Waga -->
-          <fieldset class="form-group">
-            <legend class="form-group-legend">Pomiar wagi</legend>
-            <div class="input-wrapper">
-              <span class="icon">⚖️</span>
-              <input type="number" id="weight" />
-              <span class="unit">kg</span>
-            </div>
-          </fieldset>
-          <button class="save-btn">Zapisz dane</button>
-        </form>
-      </div>
     </main>
-    <script type="module" src="./js/main.js"></script>
+
+    <script type="module">
+      import { auth } from "./js/firebase-auth.js";
+      import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+
+      // fetch headera
+      fetch("header.html")
+        .then((res) => res.text())
+        .then((html) => {
+          document.getElementById("header").innerHTML = html;
+          const navLinks = document.querySelector(".nav-links");
+          const logoutBtn = document.getElementById("logoutBtn");
+
+          // ustaw widoczność przycisku logout i navLinks
+          onAuthStateChanged(auth, (user) => {
+            if (user) {
+              navLinks.style.display = "flex";
+              logoutBtn.style.display = "inline-block";
+            } else {
+              navLinks.style.display = "none";
+              logoutBtn.style.display = "none";
+            }
+          });
+
+          // listener wylogowania
+          if (logoutBtn) {
+            import("./js/firebase-auth.js").then(({ logoutUser }) => {
+              logoutBtn.addEventListener("click", () => {
+                logoutUser();
+              });
+            });
+          }
+        });
+    </script>
+    <script type="module" src="./js/firebase-auth.js"></script>
   </body>
 </html>

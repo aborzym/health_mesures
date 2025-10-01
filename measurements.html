@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pomiary parametrów zdrowotnych</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/reset.css" />
+    <link rel="stylesheet" href="./css/main.css" />
+  </head>
+  <body>
+    <header id="header" class="main-header"></header>
+    <main>
+      <!-- Formularz pomiarów -->
+      <div id="measurement-page">
+        <h1>Wpisz swoje pomiary</h1>
+        <form id="measurements-form">
+          <!-- Wybór daty -->
+          <div class="date-container">
+            <label for="measurement-date">Data pomiarów</label>
+            <input type="date" id="measurement-date" />
+          </div>
+          <!-- Glukoza -->
+          <fieldset class="form-group">
+            <legend class="form-group-legend">Pomiary glukozy</legend>
+            <div class="input-wrapper">
+              <span class="icon">🩸</span>
+              <input type="number" id="glucose_first" />
+              <span class="unit">mg/dL</span>
+            </div>
+            <div class="input-wrapper">
+              <span class="icon">🩸</span>
+              <input type="number" id="glucose_second" />
+              <span class="unit">mg/dL</span>
+            </div>
+          </fieldset>
+          <!-- Ciśnienie -->
+          <fieldset class="form-group">
+            <legend class="form-group-legend">Pomiary ciśnienia</legend>
+            <div class="input-wrapper">
+              <span class="icon">💓</span>
+              <input type="text" id="pressure_first" />
+              <span class="unit">mmHg</span>
+            </div>
+            <div class="input-wrapper">
+              <span class="icon">💓</span>
+              <input type="text" id="pressure_second" />
+              <span class="unit">mmHg</span>
+            </div>
+          </fieldset>
+          <!-- Waga -->
+          <fieldset class="form-group">
+            <legend class="form-group-legend">Pomiar wagi</legend>
+            <div class="input-wrapper">
+              <span class="icon">⚖️</span>
+              <input type="number" id="weight" />
+              <span class="unit">kg</span>
+            </div>
+          </fieldset>
+          <button class="save-btn">Zapisz dane</button>
+        </form>
+      </div>
+    </main>
+
+    <script type="module">
+      import { auth, logoutUser } from "./js/firebase-auth.js";
+      import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+
+      fetch("header.html")
+        .then((res) => res.text())
+        .then((html) => {
+          const headerEl = document.getElementById("header");
+          headerEl.innerHTML = html;
+
+          const navLinks = headerEl.querySelector(".nav-links");
+          const logoutBtn = headerEl.querySelector("#logoutBtn");
+
+          // Listener do logout
+          if (logoutBtn) {
+            logoutBtn.addEventListener("click", () => {
+              logoutUser();
+            });
+          }
+
+          // Widoczność w zależności od stanu logowania
+          onAuthStateChanged(auth, (user) => {
+            if (!navLinks || !logoutBtn) return;
+
+            logoutBtn.style.display = user ? "inline-block" : "none";
+            navLinks.style.display = user ? "flex" : "none";
+
+            // jeśli użytkownik nie jest zalogowany, przekierowanie na index
+            if (!user) {
+              window.location.href = "index.html";
+            }
+          });
+        });
+    </script>
+
+    <script type="module" src="./js/firebase.js"></script>
+
+    <script type="module" src="./js/form.js"></script>
+  </body>
+</html>

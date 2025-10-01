@@ -178,7 +178,6 @@ main {
 
 #login-page {
   width: 100%;
-  display: none;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -231,7 +230,6 @@ main {
 }
 
 #mesurements-form {
-  display: none;
   padding: 24px;
   width: 100%;
   max-width: 600px;
