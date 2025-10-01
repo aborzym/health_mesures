@@ -26,6 +26,29 @@ const emailInput = document.getElementById("login-email");
 const passwordInput = document.getElementById("login-password");
 const body = document.querySelector(".preload-hidden");
 
+let loadingAuth = true;
+loginPage.style.display = "none";
+measurementsPage.style.display = "none";
+logoutBtn.style.display = "none";
+
+// onAuthStateChanged reaguje za każdym razem, gdy zmienia się stan logowania (login, logout, odświeżenie strony).
+onAuthStateChanged(auth, (user) => {
+  loadingAuth = false;
+  if (user) {
+    loginPage.style.display = "none";
+    measurementsPage.classList.remove("hidden");
+    measurementsPage.style.display = "block";
+    logoutBtn.style.display = "inline-block";
+    loginBtn.style.display = "none";
+  } else {
+    loginPage.style.display = "flex";
+    measurementsPage.classList.add("hidden");
+    measurementsPage.style.display = "none";
+    logoutBtn.style.display = "none";
+    loginBtn.style.display = "inline-block";
+  }
+});
+
 // ==========================
 // Logowanie
 // ==========================
@@ -90,16 +113,3 @@ logoutBtn.addEventListener("click", async () => {
 // Eksport auth (jeżeli będziesz potrzebował w innych modułach)
 // ==========================
 export { auth };
-
-// onAuthStateChanged reaguje za każdym razem, gdy zmienia się stan logowania (login, logout, odświeżenie strony).
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    loginPage.style.display = "none";
-    measurementsPage.classList.remove("hidden");
-    logoutBtn.style.display = "inline-block";
-  } else {
-    loginPage.style.display = "flex";
-    measurementsPage.classList.add("hidden");
-    logoutBtn.style.display = "none";
-  }
-});
