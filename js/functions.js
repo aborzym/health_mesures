@@ -14,7 +14,7 @@ const messageGreen = (text) => {
     duration: 3000,
     gravity: "top",
     position: "center",
-    backgroundColor: "linear-gradient(to right, #81f63d, #519b26)", // zielony gradient
+    backgroundColor: "linear-gradient(to right,  #519b26, #81f63d)", // zielony gradient
   }).showToast();
 };
 

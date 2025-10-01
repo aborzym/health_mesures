@@ -13,6 +13,8 @@ import {
 // Import zainicjalizowanego Firebase App
 import { app } from "./firebase.js";
 
+import { messageGreen, messageRed } from "./functions.js";
+
 // Uzyskaj instancję auth
 const auth = getAuth(app);
 
@@ -50,7 +52,7 @@ if (loginForm) {
     const password = passwordInput.value.trim();
 
     if (!email || !password) {
-      alert("Podaj email i hasło!");
+      messageRed("Podaj email i hasło!");
       return;
     }
 
@@ -66,7 +68,7 @@ if (loginForm) {
       window.location.href = "measurements.html";
     } catch (error) {
       console.error("Błąd logowania:", error);
-      alert("Nie udało się zalogować: " + error.message);
+      messageRed("Nie udało się zalogować: " + error.message);
     }
   });
 }
@@ -103,7 +105,7 @@ export async function logoutUser() {
     window.location.href = "index.html";
   } catch (error) {
     console.error("Błąd wylogowania:", error);
-    alert("Nie udało się wylogować: " + error.message);
+    messageRed("Nie udało się wylogować: " + error.message);
   }
 }
 

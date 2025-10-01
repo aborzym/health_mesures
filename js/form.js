@@ -9,6 +9,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 import { app } from "./firebase.js";
 import { auth } from "./firebase-auth.js";
+import { messageGreen, messageRed } from "./functions.js";
 
 const db = getFirestore(app); //getFirestore(app) — łączy projekt z Firestore.
 
@@ -92,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // WALIDACJA
       if (!validateField(inputValue, field.name.split(".")[0])) {
-        alert(`Niepoprawny format pola ${field.name}`);
+        messageRed(`Niepoprawny format pola ${field.name}`);
         return;
       }
 
@@ -120,6 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Zapis do Firestore
     await setDoc(docRef, existingMeasurement);
+    messageGreen("Pomiary zapisane pomyślnie!");
     resetForm();
   });
 
