@@ -1,3 +1,10 @@
 {
-  "cSpell.words": ["Exlo", "firebaseapp", "firebasestorage"]
+  "cSpell.words": ["Exlo", "firebaseapp", "firebasestorage"],
+
+  "files.exclude": {
+    "**/.__*": true
+  },
+  "search.exclude": {
+    "**/.__*": true
+  }
 }

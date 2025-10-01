@@ -76,3 +76,19 @@ ul {
     margin-block: 0.5em;
   }
 }
+/* ukrycie strzałek w inputach */
+input[type="number"] {
+  -moz-appearance: textfield !important;
+  appearance: textfield !important;
+  overflow: hidden;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0;
+  width: 0;
+  height: 0;
+  padding: 0;
+  border: 0;
+}

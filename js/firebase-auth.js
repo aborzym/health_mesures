@@ -7,6 +7,7 @@ import {
   getAuth,
   signInWithEmailAndPassword,
   signOut,
+  onAuthStateChanged,
 } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 
 // Import zainicjalizowanego Firebase App
@@ -23,6 +24,7 @@ const loginBtn = document.querySelector(".login-btn");
 const logoutBtn = document.querySelector(".logout-btn");
 const emailInput = document.getElementById("login-email");
 const passwordInput = document.getElementById("login-password");
+const body = document.querySelector(".preload-hidden");
 
 // ==========================
 // Logowanie
@@ -88,3 +90,16 @@ logoutBtn.addEventListener("click", async () => {
 // Eksport auth (jeżeli będziesz potrzebował w innych modułach)
 // ==========================
 export { auth };
+
+// onAuthStateChanged reaguje za każdym razem, gdy zmienia się stan logowania (login, logout, odświeżenie strony).
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    loginPage.style.display = "none";
+    measurementsPage.classList.remove("hidden");
+    logoutBtn.style.display = "inline-block";
+  } else {
+    loginPage.style.display = "flex";
+    measurementsPage.classList.add("hidden");
+    logoutBtn.style.display = "none";
+  }
+});

@@ -1,3 +1,4 @@
+@charset "UTF-8";
 *,
 *::before,
 *::after {
@@ -72,6 +73,24 @@ ul {
   li {
     margin-block: 0.5em;
   }
+}
+
+/* ukrycie strzałek w inputach */
+input[type=number] {
+  -moz-appearance: textfield !important;
+  -webkit-appearance: textfield !important;
+          appearance: textfield !important;
+  overflow: hidden;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0;
+  width: 0;
+  height: 0;
+  padding: 0;
+  border: 0;
 }
 
 body {
@@ -278,6 +297,8 @@ label {
 input[type=text],
 input[type=number] {
   padding: 8px;
+  text-align: right;
+  padding-right: 55px;
   border-radius: 6px;
   width: 100%;
   margin-bottom: 4px;
