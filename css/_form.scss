@@ -86,7 +86,7 @@ input[type="text"],
 input[type="number"] {
   padding: v.$spacing-sm;
   text-align: right;
-  padding-right: 60px;
+  padding-right: 50px;
   border-radius: 6px;
   width: 100%;
   margin-bottom: v.$spacing-xs;
@@ -147,6 +147,31 @@ input[type="number"] {
   }
 }
 
+// Puls
+#pulse_first {
+  border: 1px solid v.$color-pressure-morning;
+  background-color: color.scale(
+    v.$color-pressure-morning,
+    $lightness: 30%
+  ); // ciemniej niż 40%
+
+  &:focus {
+    border-color: v.$color-pressure-evening;
+    box-shadow: 0 0 5px rgba(29, 53, 87, 0.6); // odrobinę mocniejszy cień
+    background-color: color.scale(v.$color-pressure-morning, $lightness: 10%);
+  }
+}
+
+#pulse_second {
+  border: 1px solid v.$color-pressure-evening;
+  background-color: color.scale(v.$color-pressure-evening, $lightness: 30%);
+
+  &:focus {
+    border-color: v.$color-pressure-morning;
+    box-shadow: 0 0 5px rgba(69, 123, 157, 0.6);
+    background-color: color.scale(v.$color-pressure-evening, $lightness: 20%);
+  }
+}
 // Waga
 #weight {
   border: 1px solid v.$color-weight;
@@ -180,6 +205,9 @@ input[type="number"] {
 }
 
 .input-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
   position: relative;
   width: 100%;
   margin-bottom: v.$spacing-md;
@@ -190,11 +218,18 @@ input[type="number"] {
     transform: translateY(-50%);
     font-size: 1.1rem;
     pointer-events: none;
+    &.right {
+      left: 123px;
+    }
   }
-  input[type="text"] {
+  input[type="text"],
+  input[type="number"] {
     width: 100%;
-    padding-right: 70px; // zostaw miejsce na jednostkę po prawej
+    padding-right: 60px; // zostaw miejsce na jednostkę po prawej
     text-align: right;
+    &.small {
+      width: 60%;
+    }
   }
 
   .unit {

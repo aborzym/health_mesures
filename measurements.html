@@ -14,7 +14,16 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
     />
+    <link
+      href="
+    https://cdn.jsdelivr.net/npm/sweetalert2@11.23.0/dist/sweetalert2.min.css
+    "
+      rel="stylesheet"
+    />
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.23.0/dist/sweetalert2.all.min.js
+"></script>
   </head>
   <body>
     <header id="header" class="main-header"></header>
@@ -51,9 +60,19 @@
               <span class="unit">mmHg</span>
             </div>
             <div class="input-wrapper">
+              <span class="icon right">📈</span>
+              <input type="number" id="pulse_first" class="small" />
+              <span class="unit">BPM</span>
+            </div>
+            <div class="input-wrapper">
               <span class="icon">💓</span>
               <input type="text" id="pressure_second" />
               <span class="unit">mmHg</span>
+            </div>
+            <div class="input-wrapper">
+              <span class="icon right">📈</span>
+              <input type="number" class="small" id="pulse_second" />
+              <span class="unit">BPM</span>
             </div>
           </fieldset>
           <!-- Waga -->

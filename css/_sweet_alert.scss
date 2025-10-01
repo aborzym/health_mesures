@@ -1,0 +1,42 @@
+.swal-custom-popup {
+  background: linear-gradient(
+    135deg,
+    #1d3557,
+    #457b9d
+  ); /* gradient z headera */
+  border-radius: 15px;
+  color: #f1faee;
+  padding: 2rem;
+}
+
+.swal-custom-title {
+  color: #f1faee;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.swal-custom-icon {
+  font-size: 15px !important; /* mniejsza ikonka warning */
+}
+
+.swal-confirm-btn {
+  background: linear-gradient(
+    to right,
+    #2a9d8f,
+    #3aaf96
+  ) !important; /* zielony gradient */
+  color: #fff !important;
+  font-weight: bold;
+  border: none;
+}
+
+.swal-cancel-btn {
+  background: linear-gradient(
+    to right,
+    #f94144,
+    #c1121f
+  ) !important; /* czerwony gradient */
+  color: #fff !important;
+  font-weight: bold;
+  border: none;
+}

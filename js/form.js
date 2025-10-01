@@ -9,7 +9,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 import { app } from "./firebase.js";
 import { auth } from "./firebase-auth.js";
-import { messageGreen, messageRed } from "./functions.js";
+import { askOverwrite, messageGreen, messageRed } from "./functions.js";
 
 const db = getFirestore(app); //getFirestore(app) — łączy projekt z Firestore.
 
@@ -34,6 +34,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const glucoseSecond = document.getElementById("glucose_second");
   const pressureMorning = document.getElementById("pressure_first");
   const pressureEvening = document.getElementById("pressure_second");
+  const pulseMorning = document.getElementById("pulse_first");
+  const pulseEvening = document.getElementById("pulse_second");
   const weight = document.getElementById("weight");
   const saveBtn = document.querySelector(".save-btn");
 
@@ -54,15 +56,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Pobranie istniejącego dokumentu
     const docSnap = await getDoc(docRef);
-    const existingMeasurement = docSnap.exists()
-      ? docSnap.data()
-      : {
-          date: measurementDate.value,
-          glucose: { first: "", second: "" },
-          pressure: { morning: "", evening: "" },
-          weight: "",
-        };
-
+    const existingMeasurement = docSnap.exists() ? docSnap.data() : {};
+    if (!existingMeasurement.glucose)
+      existingMeasurement.glucose = { first: "", second: "" };
+    if (!existingMeasurement.pressure)
+      existingMeasurement.pressure = { morning: "", evening: "" };
+    if (!existingMeasurement.pulse)
+      existingMeasurement.pulse = { morning: "", evening: "" };
+    if (!existingMeasurement.weight) existingMeasurement.weight = "";
+    if (!existingMeasurement.date)
+      existingMeasurement.date = measurementDate.value;
     const fields = [
       {
         name: "glucose.first",
@@ -84,9 +87,20 @@ document.addEventListener("DOMContentLoaded", () => {
         input: pressureEvening,
         path: ["pressure", "evening"],
       },
+      {
+        name: "pulse.morning",
+        input: pulseMorning,
+        path: ["pulse", "morning"],
+      },
+      {
+        name: "pulse.evening",
+        input: pulseEvening,
+        path: ["pulse", "evening"],
+      },
       { name: "weight", input: weight, path: ["weight"] },
     ];
-
+    let newFieldsAdded = []; // lista nowych pól
+    //
     for (const field of fields) {
       const inputValue = field.input.value.trim();
       if (!inputValue) continue; // puste pola pomijamy
@@ -103,14 +117,17 @@ document.addEventListener("DOMContentLoaded", () => {
           : existingMeasurement?.[field.path[0]] ?? "";
 
       // Pytamy tylko, jeśli istnieje wartość i próbujemy nadpisać
-      const shouldOverwrite =
-        existingValue && existingValue !== inputValue
-          ? confirm(
-              `Pole ${field.name} ma już wartość ${existingValue}. Nadpisać?`
-            )
-          : true;
+      let shouldOverwrite = true;
+
+      if (existingValue && existingValue !== inputValue) {
+        shouldOverwrite = await askOverwrite(field.name, existingValue);
+      }
 
       if (shouldOverwrite) {
+        // jeżeli pole było puste i teraz wypełnione, dodajemy do listy
+        if (existingValue === "") {
+          newFieldsAdded.push(field.name);
+        }
         if (field.path.length === 2) {
           existingMeasurement[field.path[0]][field.path[1]] = inputValue;
         } else {
@@ -118,10 +135,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
     }
+    // Po zapisaniu wszystkich pól
+    if (newFieldsAdded.length === 1) {
+      messageGreen(`Dodano nowy pomiar: ${newFieldsAdded[0]}`);
+    } else if (newFieldsAdded.length > 1) {
+      messageGreen("Dodano nowe pomiary!");
+    }
 
     // Zapis do Firestore
     await setDoc(docRef, existingMeasurement);
-    messageGreen("Pomiary zapisane pomyślnie!");
     resetForm();
   });
 
@@ -130,6 +152,8 @@ document.addEventListener("DOMContentLoaded", () => {
     glucoseSecond.value = "";
     pressureMorning.value = "";
     pressureEvening.value = "";
+    pulseMorning.value = "";
+    pulseEvening.value = "";
     weight.value = "";
 
     // przywracamy dzisiejszą datę w polu daty
@@ -150,7 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function validateField(value, type) {
     let pattern;
-    if (type === "glucose") {
+    if (type === "glucose" || type === "pulse") {
       pattern = /^\d+$/;
     } else if (type === "pressure") {
       pattern = /^\d{2,3}\/\d{2,3}$/; // np. 120/80

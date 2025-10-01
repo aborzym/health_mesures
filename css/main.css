@@ -297,7 +297,7 @@ input[type=text],
 input[type=number] {
   padding: 8px;
   text-align: right;
-  padding-right: 60px;
+  padding-right: 50px;
   border-radius: 6px;
   width: 100%;
   margin-bottom: 4px;
@@ -352,6 +352,26 @@ input[type=number]:focus {
   background-color: rgb(48.7, 89.0034482759, 146.1);
 }
 
+#pulse_first {
+  border: 1px solid #457b9d;
+  background-color: rgb(116.8955752212, 164.396460177, 194.3044247788);
+}
+#pulse_first:focus {
+  border-color: #1d3557;
+  box-shadow: 0 0 5px rgba(29, 53, 87, 0.6);
+  background-color: rgb(77.6707964602, 138.4566371681, 176.7292035398);
+}
+
+#pulse_second {
+  border: 1px solid #1d3557;
+  background-color: rgb(58.55, 107.0051724138, 175.65);
+}
+#pulse_second:focus {
+  border-color: #457b9d;
+  box-shadow: 0 0 5px rgba(69, 123, 157, 0.6);
+  background-color: rgb(48.7, 89.0034482759, 146.1);
+}
+
 #weight {
   border: 1px solid #2a9d8f;
   background-color: rgb(107.7829145729, 215.6170854271, 202.4894472362);
@@ -379,6 +399,9 @@ input[type=number]:focus {
 }
 
 .input-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
   position: relative;
   width: 100%;
   margin-bottom: 16px;
@@ -391,10 +414,18 @@ input[type=number]:focus {
   font-size: 1.1rem;
   pointer-events: none;
 }
-.input-wrapper input[type=text] {
+.input-wrapper .icon.right {
+  left: 123px;
+}
+.input-wrapper input[type=text],
+.input-wrapper input[type=number] {
   width: 100%;
-  padding-right: 70px;
+  padding-right: 60px;
   text-align: right;
+}
+.input-wrapper input[type=text].small,
+.input-wrapper input[type=number].small {
+  width: 60%;
 }
 .input-wrapper .unit {
   position: absolute;
@@ -404,4 +435,35 @@ input[type=number]:focus {
   font-size: 0.9rem;
   color: #212529;
   pointer-events: none;
+}
+
+.swal-custom-popup {
+  background: linear-gradient(135deg, #1d3557, #457b9d); /* gradient z headera */
+  border-radius: 15px;
+  color: #f1faee;
+  padding: 2rem;
+}
+
+.swal-custom-title {
+  color: #f1faee;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.swal-custom-icon {
+  font-size: 15px !important; /* mniejsza ikonka warning */
+}
+
+.swal-confirm-btn {
+  background: linear-gradient(to right, #2a9d8f, #3aaf96) !important; /* zielony gradient */
+  color: #fff !important;
+  font-weight: bold;
+  border: none;
+}
+
+.swal-cancel-btn {
+  background: linear-gradient(to right, #f94144, #c1121f) !important; /* czerwony gradient */
+  color: #fff !important;
+  font-weight: bold;
+  border: none;
 }/*# sourceMappingURL=main.css.map */
