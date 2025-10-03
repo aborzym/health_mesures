@@ -1,6 +1,11 @@
 import { app } from "./firebase.js";
 import { auth } from "./firebase-auth.js";
-import { messageRed, getTodayDate, getValueFromArray } from "./functions.js";
+import {
+  messageRed,
+  getTodayDate,
+  getValueFromArray,
+  reverseDateFormat,
+} from "./functions.js";
 
 import {
   getFirestore,
@@ -10,7 +15,7 @@ import {
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 import { recordsTemplate } from "./recordsData.js";
 const db = getFirestore(app); // połączenie z firestore
-
+const recordsHeader = document.getElementById("records-header");
 const recordsContainer = document.querySelector(".records-container");
 const recordList = document.getElementById("records-list");
 const today = getTodayDate();
@@ -31,7 +36,13 @@ onAuthStateChanged(auth, (user) => {
 //========================
 dateInput.addEventListener("input", async (e) => {
   const selectedDate = e.target.value;
+  console.log("selected date: " + selectedDate);
   if (currentUser) fetchAndRenderRecords(selectedDate);
+  if (selectedDate !== today) {
+    recordsHeader.innerText = `Pomiary z dnia ${reverseDateFormat(
+      selectedDate
+    )}`;
+  } else recordsHeader.innerText = "Dzisiejsze zapisane pomiary";
 });
 
 //========================
@@ -49,12 +60,8 @@ function renderRecordsForDate(data, date) {
     span.classList.add("record-value");
     span.innerText = value;
     p.appendChild(span);
-    console.log(p);
     recordList.appendChild(p);
   });
-
-  console.log("Dane z Firestore:", data); //TODO
-  console.log("Data pomiaru:", date); //TODO
 }
 
 async function fetchAndRenderRecords(date) {

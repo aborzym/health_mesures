@@ -20,7 +20,7 @@
   position: absolute;
   top: 120px;
   left: 100%;
-  margin-left: 60px;
+  margin-left: 30px;
   width: 300px;
 }
 // ====================
@@ -250,14 +250,14 @@ input[type="number"] {
     padding-right: 60px; // zostaw miejsce na jednostkę po prawej
     text-align: right;
     &.small {
-      width: 60%;
+      width: 65%;
     }
   }
 
   .unit {
     position: absolute;
     right: 10px;
-    top: 40%;
+    top: 45%;
     transform: translateY(-50%);
     font-size: 0.9rem;
     color: v.$color-text;

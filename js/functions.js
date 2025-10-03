@@ -63,10 +63,15 @@ const getValueFromArray = (key, data, unit) => {
   return value ? `${value} ${unit}` : "brak pomiaru";
 };
 
+const reverseDateFormat = (date) => {
+  const newDate = date.split("-");
+  return `${newDate[2]}-${newDate[1]}-${newDate[0]}`;
+};
 export {
   askOverwrite,
   messageGreen,
   messageRed,
   getValueFromArray,
   getTodayDate,
+  reverseDateFormat,
 };

@@ -246,7 +246,7 @@ main {
   position: absolute;
   top: 120px;
   left: 100%;
-  margin-left: 60px;
+  margin-left: 30px;
   width: 300px;
 }
 
@@ -446,12 +446,12 @@ input[type=number]:focus {
 }
 .input-wrapper input[type=text].small,
 .input-wrapper input[type=number].small {
-  width: 60%;
+  width: 65%;
 }
 .input-wrapper .unit {
   position: absolute;
   right: 10px;
-  top: 40%;
+  top: 45%;
   transform: translateY(-50%);
   font-size: 0.9rem;
   color: #212529;
