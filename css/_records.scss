@@ -1,0 +1,17 @@
+.records-container {
+  display: flex;
+  flex-direction: column;
+}
+.records-list {
+  font-size: 8px;
+}
+
+.record-label {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 5 px;
+  text-align: left;
+}
+
+.record.value {
+}

@@ -2,9 +2,31 @@
 @use "sass:color";
 
 // ====================
+// CONTAINER
+// ====================
+.measurement-layout {
+  position: relative;
+  display: flex;
+  justify-content: center; // formularz na środku
+}
+
+#measurement-page {
+  margin-top: 50px;
+  max-width: 600px;
+  min-width: 400px;
+  flex: 0 0 auto;
+}
+.records-container {
+  position: absolute;
+  top: 120px;
+  left: 100%;
+  margin-left: 60px;
+  width: 300px;
+}
+// ====================
 // Formularz główny
 // ====================
-#mesurements-form {
+#measurements-form {
   padding: v.$spacing-lg;
   width: 100%;
   max-width: 600px;
@@ -242,3 +264,7 @@ input[type="number"] {
     pointer-events: none; // nie przeszkadza w klikaniu inputa
   }
 }
+
+// ====================
+// SEKCJA PRAWA
+// ====================

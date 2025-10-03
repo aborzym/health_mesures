@@ -18,7 +18,7 @@ const messageGreen = (text) => {
   }).showToast();
 };
 
-async function askOverwrite(fieldName, existingValue) {
+const askOverwrite = async (fieldName, existingValue) => {
   const result = await Swal.fire({
     title: `Pole ${fieldName} ma już wartość ${existingValue}`,
     text: "Czy chcesz nadpisać?",
@@ -47,5 +47,26 @@ async function askOverwrite(fieldName, existingValue) {
     messageRed(`Nie nadpisano pola ${fieldName}`);
     return false;
   }
-}
-export { messageGreen, messageRed, askOverwrite };
+};
+
+const getTodayDate = () => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+  const todayFullDate = `${year}-${month}-${day}`;
+  return todayFullDate;
+};
+
+const getValueFromArray = (key, data, unit) => {
+  const value = key.split(".").reduce((a, b) => a?.[b], data);
+  return value ? `${value} ${unit}` : "brak pomiaru";
+};
+
+export {
+  askOverwrite,
+  messageGreen,
+  messageRed,
+  getValueFromArray,
+  getTodayDate,
+};

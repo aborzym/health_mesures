@@ -229,7 +229,28 @@ main {
   background-color: #27ae60;
 }
 
-#mesurements-form {
+.measurement-layout {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+#measurement-page {
+  margin-top: 50px;
+  max-width: 600px;
+  min-width: 400px;
+  flex: 0 0 auto;
+}
+
+.records-container {
+  position: absolute;
+  top: 120px;
+  left: 100%;
+  margin-left: 60px;
+  width: 300px;
+}
+
+#measurements-form {
   padding: 24px;
   width: 100%;
   max-width: 600px;
@@ -435,6 +456,22 @@ input[type=number]:focus {
   font-size: 0.9rem;
   color: #212529;
   pointer-events: none;
+}
+
+.records-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.records-list {
+  font-size: 8px;
+}
+
+.record-label {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 5 px;
+  text-align: left;
 }
 
 .swal-custom-popup {

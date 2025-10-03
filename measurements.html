@@ -28,64 +28,72 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.23.0/dist/sweetalert2.all.min.js
   <body>
     <header id="header" class="main-header"></header>
     <main>
-      <!-- Formularz pomiarów -->
-      <div id="measurement-page">
-        <h1>Wpisz swoje pomiary</h1>
-        <form id="measurements-form">
-          <!-- Wybór daty -->
-          <div class="date-container">
-            <label for="measurement-date">Data pomiarów</label>
-            <input type="date" id="measurement-date" />
+      <div class="measurement-layout">
+        <!-- Formularz pomiarów -->
+        <div id="measurement-page">
+          <h1>Wpisz swoje pomiary</h1>
+          <form id="measurements-form">
+            <!-- Wybór daty -->
+            <div class="date-container">
+              <label for="measurement-date">Data pomiarów</label>
+              <input type="date" id="measurement-date" />
+            </div>
+            <!-- Glukoza -->
+            <fieldset class="form-group">
+              <legend class="form-group-legend">Pomiary glukozy</legend>
+              <div class="input-wrapper">
+                <span class="icon">🩸</span>
+                <input type="number" id="glucose_first" />
+                <span class="unit">mg/dL</span>
+              </div>
+              <div class="input-wrapper">
+                <span class="icon">🩸</span>
+                <input type="number" id="glucose_second" />
+                <span class="unit">mg/dL</span>
+              </div>
+            </fieldset>
+            <!-- Ciśnienie -->
+            <fieldset class="form-group">
+              <legend class="form-group-legend">Pomiary ciśnienia</legend>
+              <div class="input-wrapper">
+                <span class="icon">💓</span>
+                <input type="text" id="pressure_first" />
+                <span class="unit">mmHg</span>
+              </div>
+              <div class="input-wrapper">
+                <span class="icon right">📈</span>
+                <input type="number" id="pulse_first" class="small" />
+                <span class="unit">BPM</span>
+              </div>
+              <div class="input-wrapper">
+                <span class="icon">💓</span>
+                <input type="text" id="pressure_second" />
+                <span class="unit">mmHg</span>
+              </div>
+              <div class="input-wrapper">
+                <span class="icon right">📈</span>
+                <input type="number" class="small" id="pulse_second" />
+                <span class="unit">BPM</span>
+              </div>
+            </fieldset>
+            <!-- Waga -->
+            <fieldset class="form-group">
+              <legend class="form-group-legend">Pomiar wagi</legend>
+              <div class="input-wrapper">
+                <span class="icon">⚖️</span>
+                <input type="number" id="weight" />
+                <span class="unit">kg</span>
+              </div>
+            </fieldset>
+            <button class="save-btn">Zapisz dane</button>
+          </form>
+        </div>
+        <div class="records-container hidden">
+          <h3 id="records-header">Dzisiejsze zapisane pomiary</h3>
+          <div id="records-list">
+            <!-- Tutaj dynamicznie będą dodawane pomiary z Firestore -->
           </div>
-          <!-- Glukoza -->
-          <fieldset class="form-group">
-            <legend class="form-group-legend">Pomiary glukozy</legend>
-            <div class="input-wrapper">
-              <span class="icon">🩸</span>
-              <input type="number" id="glucose_first" />
-              <span class="unit">mg/dL</span>
-            </div>
-            <div class="input-wrapper">
-              <span class="icon">🩸</span>
-              <input type="number" id="glucose_second" />
-              <span class="unit">mg/dL</span>
-            </div>
-          </fieldset>
-          <!-- Ciśnienie -->
-          <fieldset class="form-group">
-            <legend class="form-group-legend">Pomiary ciśnienia</legend>
-            <div class="input-wrapper">
-              <span class="icon">💓</span>
-              <input type="text" id="pressure_first" />
-              <span class="unit">mmHg</span>
-            </div>
-            <div class="input-wrapper">
-              <span class="icon right">📈</span>
-              <input type="number" id="pulse_first" class="small" />
-              <span class="unit">BPM</span>
-            </div>
-            <div class="input-wrapper">
-              <span class="icon">💓</span>
-              <input type="text" id="pressure_second" />
-              <span class="unit">mmHg</span>
-            </div>
-            <div class="input-wrapper">
-              <span class="icon right">📈</span>
-              <input type="number" class="small" id="pulse_second" />
-              <span class="unit">BPM</span>
-            </div>
-          </fieldset>
-          <!-- Waga -->
-          <fieldset class="form-group">
-            <legend class="form-group-legend">Pomiar wagi</legend>
-            <div class="input-wrapper">
-              <span class="icon">⚖️</span>
-              <input type="number" id="weight" />
-              <span class="unit">kg</span>
-            </div>
-          </fieldset>
-          <button class="save-btn">Zapisz dane</button>
-        </form>
+        </div>
       </div>
     </main>
 
@@ -124,8 +132,6 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.23.0/dist/sweetalert2.all.min.js
         });
     </script>
 
-    <script type="module" src="./js/firebase.js"></script>
-
-    <script type="module" src="./js/form.js"></script>
+    <script type="module" src="./js/main.js" defer></script>
   </body>
 </html>
