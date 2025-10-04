@@ -25,8 +25,9 @@
 https://cdn.jsdelivr.net/npm/sweetalert2@11.23.0/dist/sweetalert2.all.min.js
 "></script>
   </head>
-  <body>
+  <body class="preloading">
     <header id="header" class="main-header"></header>
+    <div id="loader" class="loader">Ładowanie...</div>
     <main>
       <div class="measurement-layout">
         <!-- Formularz pomiarów -->
@@ -118,14 +119,20 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.23.0/dist/sweetalert2.all.min.js
           }
 
           // Widoczność w zależności od stanu logowania
+          const loader = document.getElementById("loader");
+
           onAuthStateChanged(auth, (user) => {
+            document.body.classList.remove("preloading");
+            loader.classList.add("hidden");
+
             if (!navLinks || !logoutBtn) return;
 
-            logoutBtn.style.display = user ? "inline-block" : "none";
-            navLinks.style.display = user ? "flex" : "none";
-
-            // jeśli użytkownik nie jest zalogowany, przekierowanie na index
-            if (!user) {
+            if (user) {
+              logoutBtn.style.display = "inline-block";
+              navLinks.style.display = "flex";
+            } else {
+              logoutBtn.style.display = "none";
+              navLinks.style.display = "none";
               window.location.href = "index.html";
             }
           });

@@ -35,9 +35,21 @@ const passwordInput = document.getElementById("login-password");
 onAuthStateChanged(auth, (user) => {
   if (user) {
     console.log("Użytkownik zalogowany:", user.email);
-    // tu nie trzeba nic zmieniać, bo przekierowanie zrobimy w submit
+
+    // jeśli użytkownik jest zalogowany i jest na stronie logowania → przekieruj na measurements.html
+    if (
+      window.location.pathname.endsWith("index.html") ||
+      window.location.pathname === "/"
+    ) {
+      window.location.href = "measurements.html";
+    }
   } else {
     console.log("Użytkownik wylogowany");
+
+    // jeśli użytkownik NIE jest zalogowany, a jest na measurements.html → przekieruj na index.html
+    if (window.location.pathname.endsWith("measurements.html")) {
+      window.location.href = "index.html";
+    }
   }
 });
 

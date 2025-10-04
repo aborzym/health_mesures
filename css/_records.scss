@@ -1,17 +1,71 @@
 .records-container {
+  position: absolute;
   display: flex;
   flex-direction: column;
+  top: 120px;
+  left: 100%;
+  margin-left: 30px;
+  width: 300px;
 }
+
 .records-list {
   font-size: 8px;
 }
 
 .record-label {
   display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 5 px;
+  grid-template-columns: 1fr auto auto; /* trzy kolumny: tekst, wartość, kosz */
+  gap: 5px;
   text-align: left;
+  align-items: center;
 }
 
-.record.value {
+.record-delete {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid #000; /* czarne kółko */
+  cursor: pointer;
+
+  &:hover {
+    border: 1px solid #c03020; /* czarne kółko */
+  }
+
+  svg {
+    width: 18px; /* rozmiar ikony */
+    height: 18px;
+    fill: black; /* domyślny kolor kosza */
+    transition: transform 0.2s, fill 0.2s;
+  }
+
+  &:hover svg {
+    fill: #c03020; /* kolor czerwony po najechaniu */
+  }
+
+  &:active svg {
+    animation: bounce 0.3s;
+    // transform: translateY(-3px) scale(1.2); /* podskok i lekki powiększenie */
+  }
+}
+
+/* animacja sprężynowa */
+@keyframes bounce {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  30% {
+    transform: translateY(-3px) scale(1.1);
+  }
+  50% {
+    transform: translateY(0) scale(1);
+  }
+  70% {
+    transform: translateY(-2px) scale(1.05);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
 }

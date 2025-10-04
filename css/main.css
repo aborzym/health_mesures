@@ -108,6 +108,24 @@ body {
   font-weight: 500;
 }
 
+body.preloading main {
+  display: none;
+}
+
+.loader {
+  position: fixed;
+  inset: 0;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #555;
+  z-index: 9999;
+}
+
 legend {
   font-size: 24px;
   font-weight: 500;
@@ -240,14 +258,6 @@ main {
   max-width: 600px;
   min-width: 400px;
   flex: 0 0 auto;
-}
-
-.records-container {
-  position: absolute;
-  top: 120px;
-  left: 100%;
-  margin-left: 30px;
-  width: 300px;
 }
 
 #measurements-form {
@@ -459,8 +469,13 @@ input[type=number]:focus {
 }
 
 .records-container {
+  position: absolute;
   display: flex;
   flex-direction: column;
+  top: 120px;
+  left: 100%;
+  margin-left: 30px;
+  width: 300px;
 }
 
 .records-list {
@@ -469,11 +484,56 @@ input[type=number]:focus {
 
 .record-label {
   display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 5 px;
+  grid-template-columns: 1fr auto auto; /* trzy kolumny: tekst, wartość, kosz */
+  gap: 5px;
   text-align: left;
+  align-items: center;
 }
 
+.record-delete {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid #000; /* czarne kółko */
+  cursor: pointer;
+}
+.record-delete:hover {
+  border: 1px solid #c03020; /* czarne kółko */
+}
+.record-delete svg {
+  width: 18px; /* rozmiar ikony */
+  height: 18px;
+  fill: black; /* domyślny kolor kosza */
+  transition: transform 0.2s, fill 0.2s;
+}
+.record-delete:hover svg {
+  fill: #c03020; /* kolor czerwony po najechaniu */
+}
+.record-delete:active svg {
+  animation: bounce 0.3s;
+}
+
+/* animacja sprężynowa */
+@keyframes bounce {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  30% {
+    transform: translateY(-3px) scale(1.1);
+  }
+  50% {
+    transform: translateY(0) scale(1);
+  }
+  70% {
+    transform: translateY(-2px) scale(1.05);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
 .swal-custom-popup {
   background: linear-gradient(135deg, #1d3557, #457b9d); /* gradient z headera */
   border-radius: 15px;

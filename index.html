@@ -11,11 +11,12 @@
     <link rel="stylesheet" href="./css/reset.css" />
     <link rel="stylesheet" href="./css/main.css" />
   </head>
-  <body>
+  <body class="preloading">
     <header id="header" class="main-header"></header>
+    <div id="loader" class="loader">Ładowanie...</div>
     <main>
       <!-- Logowanie -->
-      <div id="login-page">
+      <div id="login-page" class="hidden">
         <h1>Logowanie do Moich Pomiarów</h1>
         <form id="login-form">
           <label for="login-email">Email:</label>
@@ -33,6 +34,9 @@
       import { auth } from "./js/firebase-auth.js";
       import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 
+      const loader = document.getElementById("loader");
+      const loginPage = document.getElementById("login-page");
+
       // fetch headera
       fetch("header.html")
         .then((res) => res.text())
@@ -43,12 +47,19 @@
 
           // ustaw widoczność przycisku logout i navLinks
           onAuthStateChanged(auth, (user) => {
+            document.body.classList.remove("preloading"); // usuń klasę blokującą
+
+            if (loader) loader.style.display = "none";
+
             if (user) {
-              navLinks.style.display = "flex";
-              logoutBtn.style.display = "inline-block";
+              // Użytkownik zalogowany → przekierowanie na measurements.html
+              window.location.href = "measurements.html";
             } else {
-              navLinks.style.display = "none";
-              logoutBtn.style.display = "none";
+              // Pokaż formularz logowania
+              loginPage.classList.remove("hidden");
+
+              if (navLinks) navLinks.style.display = "none";
+              if (logoutBtn) logoutBtn.style.display = "none";
             }
           });
 
@@ -62,6 +73,7 @@
           }
         });
     </script>
+
     <script type="module" src="./js/firebase-auth.js"></script>
   </body>
 </html>
