@@ -15,7 +15,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 import { recordsTemplate } from "./recordsData.js";
-export const db = getFirestore(app); // połączenie z firestore
+const db = getFirestore(app); // połączenie z firestore
 const recordsHeader = document.getElementById("records-header");
 const recordsContainer = document.querySelector(".records-container");
 const recordList = document.getElementById("records-list");
@@ -80,7 +80,7 @@ function renderRecordsForDate(data, date) {
       deleteBtn.classList.add("record-delete");
       deleteBtn.addEventListener("click", () => {
         //logika kasowania
-        deleteMeasurement(date, item.key);
+        deleteMeasurement(date, item.key, currentUser.uid);
       });
       p.appendChild(deleteBtn);
     }

@@ -3,7 +3,10 @@ import {
   getDoc,
 } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 
-import { db } from "./records";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+import { app } from "./firebase.js";
+
+const db = getFirestore(app);
 
 const messageRed = (text) => {
   Toastify({
@@ -75,11 +78,12 @@ const reverseDateFormat = (date) => {
   return `${newDate[2]}-${newDate[1]}-${newDate[0]}`;
 };
 
-const deleteMeasurement = async (date, key) => {
+const deleteMeasurement = async (date, key, userId) => {
   console.log(`received arguments: date: ${date} & key: ${key}`);
-  const docRef = doc(db, "measurements", date);
-  const docSnap = await getDoc(docRef);
 
+  const docRef = doc(db, "users", userId, "measurements", date);
+  const docSnap = await getDoc(docRef);
+  console.log(docSnap.exists());
   if (docSnap.exists()) {
     console.log(`znaleziono dokument: ${docSnap.date()}`);
   } else {
