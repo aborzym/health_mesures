@@ -1,6 +1,7 @@
 import {
   doc,
   getDoc,
+  updateDoc,
 } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 
 import { getFirestore } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
@@ -79,15 +80,14 @@ const reverseDateFormat = (date) => {
 };
 
 const deleteMeasurement = async (date, key, userId) => {
-  console.log(`received arguments: date: ${date} & key: ${key}`);
-
   const docRef = doc(db, "users", userId, "measurements", date);
   const docSnap = await getDoc(docRef);
   console.log(docSnap.exists());
   if (docSnap.exists()) {
-    console.log(`znaleziono dokument: ${docSnap.date()}`);
+    await updateDoc(docRef, { [key]: "" });
+    // fetchAndRenderRecords();
+    messageGreen(`Usunięcie pomiaru w polu ${key}`);
   } else {
-    console.log(`Brak dokumentu dla tej daty`);
   }
 };
 export {

@@ -66,6 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!existingMeasurement.weight) existingMeasurement.weight = "";
     if (!existingMeasurement.date)
       existingMeasurement.date = measurementDate.value;
+
     const fields = [
       {
         name: "glucose.first",
@@ -145,6 +146,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // Zapis do Firestore
     await setDoc(docRef, existingMeasurement);
     resetForm();
+
+    // ========================
+    // RESET FORMULARZA
+    // ========================
+    resetForm();
   });
 
   function resetForm() {
@@ -156,12 +162,10 @@ document.addEventListener("DOMContentLoaded", () => {
     pulseEvening.value = "";
     weight.value = "";
 
-    // przywracamy dzisiejszą datę w polu daty
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, "0");
-    const day = String(today.getDate()).padStart(2, "0");
-    measurementDate.value = `${year}-${month}-${day}`;
+    // ========================
+    // UWAGA: nie ustawiamy tutaj daty na dzisiaj,
+    // aby nie resetować wybranej przez użytkownika daty
+    // ========================
   }
 
   function confirmFieldOverwrite(fieldName, inputValue, existingValue) {

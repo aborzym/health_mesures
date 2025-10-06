@@ -12,16 +12,20 @@ import {
   getFirestore,
   doc,
   getDoc,
+  onSnapshot,
 } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 import { recordsTemplate } from "./recordsData.js";
 const db = getFirestore(app); // połączenie z firestore
+
 const recordsHeader = document.getElementById("records-header");
 const recordsContainer = document.querySelector(".records-container");
 const recordList = document.getElementById("records-list");
 const today = getTodayDate();
 const dateInput = document.getElementById("measurement-date");
 let currentUser;
+let unsubscribe = null; // globalna zmienna do odsubskrybowania
+
 //========================
 // POBRANIE DZISIEJSZEGO DOKUMENTU DLA STARTU STRONY
 //========================
@@ -33,7 +37,10 @@ onAuthStateChanged(auth, (user) => {
 
   if (user) {
     currentUser = user;
-    fetchAndRenderRecords(today);
+    // ========================
+    // Subskrypcja dla dzisiejszego dnia
+    // ========================
+    unsubscribe = subscribeToRecords(today);
   } else {
     window.location.href = "index.html";
   }
@@ -44,17 +51,27 @@ onAuthStateChanged(auth, (user) => {
 //========================
 dateInput.addEventListener("input", async (e) => {
   const selectedDate = e.target.value;
-  console.log("selected date: " + selectedDate);
-  if (currentUser) fetchAndRenderRecords(selectedDate);
+  console.log("selected date: " + selectedDate); //TODO do wywalenia
+
+  // Anulujemy poprzednią subskrypcję, jeśli istnieje
+  if (unsubscribe) unsubscribe();
+
+  if (currentUser) {
+    // Zapisujemy funkcję do odsubskrybowania
+    unsubscribe = subscribeToRecords(selectedDate);
+  }
+
   if (selectedDate !== today) {
     recordsHeader.innerText = `Pomiary z dnia ${reverseDateFormat(
       selectedDate
     )}`;
-  } else recordsHeader.innerText = "Dzisiejsze zapisane pomiary";
+  } else {
+    recordsHeader.innerText = "Dzisiejsze zapisane pomiary";
+  }
 });
 
 //========================
-// Funkcja renderowania  zapisów
+// Funkcja renderowania zapisów
 //========================
 function renderRecordsForDate(data, date) {
   recordList.innerHTML = "";
@@ -78,9 +95,9 @@ function renderRecordsForDate(data, date) {
   </g>
 </svg>`;
       deleteBtn.classList.add("record-delete");
-      deleteBtn.addEventListener("click", () => {
+      deleteBtn.addEventListener("click", async () => {
         //logika kasowania
-        deleteMeasurement(date, item.key, currentUser.uid);
+        await deleteMeasurement(date, item.key, currentUser.uid);
       });
       p.appendChild(deleteBtn);
     }
@@ -88,26 +105,56 @@ function renderRecordsForDate(data, date) {
   });
 }
 
-async function fetchAndRenderRecords(date) {
-  // Jeśli użytkownik jest zalogowany, pobieramy jego UID używamy usera z globalnej zmiennej
-  const userId = currentUser.uid;
-  // Tworzymy referencję do dokumentu w Firestore
-  // Struktura: kolekcja "users" → dokument userId → kolekcja "measurements" → dokument z wybraną datą
-  const docRef = doc(db, "users", userId, "measurements", date);
-  try {
-    // Pobieramy dokument z Firestore
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      // Jeśli dokument istnieje → wywołujemy funkcję renderującą pomiary
-      // Tutaj mozna przekazać docSnap.data() jako dane
-      renderRecordsForDate(docSnap.data(), date);
-    } else {
-      // Jeśli dokument nie istnieje → ukrywamy kontener z zapisanymi pomiarami
-      recordsContainer.classList.add("hidden");
+//========================
+// Funkcja subskrypcji dokumentu
+//========================
+function subscribeToRecords(date) {
+  const docRef = doc(db, "users", currentUser.uid, "measurements", date);
+
+  // onSnapshot zwraca funkcję do odsubskrybowania
+  return onSnapshot(
+    docRef,
+    (docSnap) => {
+      if (docSnap.exists()) {
+        // Jeśli dokument istnieje → wywołujemy funkcję renderującą pomiary
+        renderRecordsForDate(docSnap.data(), date);
+      } else {
+        // Jeśli dokument nie istnieje → ukrywamy kontener z zapisanymi pomiarami
+        recordsContainer.classList.add("hidden");
+      }
+    },
+    (error) => {
+      console.error("Błąd przy subskrybowaniu dokumentu:", error);
+      messageRed(
+        "Wystąpił błąd przy pobieraniu dokumentu - spróbuj jeszcze raz"
+      );
     }
-  } catch (error) {
-    // Jeśli coś pójdzie nie tak z pobraniem dokumentu, logujemy błąd
-    console.error("Błąd przy pobieraniu dokumentu:", error);
-    messageRed("Wystąpił błąd przy pobieraniu dokumentu - spróbuj jeszcze raz");
-  }
+  );
 }
+
+//TODO - do wywalenia, jak będzie wszystko działać
+// async function fetchAndRenderRecords(date) {
+//   // Jeśli użytkownik jest zalogowany, pobieramy jego UID używamy usera z globalnej zmiennej
+//   const userId = currentUser.uid;
+//   // Tworzymy referencję do dokumentu w Firestore
+//   // Struktura: kolekcja "users" → dokument userId → kolekcja "measurements" → dokument z wybraną datą
+//   const docRef = doc(db, "users", userId, "measurements", date);
+//   try {
+//     // Pobieramy dokument z Firestore
+//     const docSnap = await getDoc(docRef);
+//     if (docSnap.exists()) {
+//       // Jeśli dokument istnieje → wywołujemy funkcję renderującą pomiary
+//       // Tutaj mozna przekazać docSnap.data() jako dane
+//       renderRecordsForDate(docSnap.data(), date);
+//     } else {
+//       // Jeśli dokument nie istnieje → ukrywamy kontener z zapisanymi pomiarami
+//       recordsContainer.classList.add("hidden");
+//     }
+//   } catch (error) {
+//     // Jeśli coś pójdzie nie tak z pobraniem dokumentu, logujemy błąd
+//     console.error("Błąd przy pobieraniu dokumentu:", error);
+//     messageRed("Wystąpił błąd przy pobieraniu dokumentu - spróbuj jeszcze raz");
+//   }
+// }
+
+// export { fetchAndRenderRecords };
